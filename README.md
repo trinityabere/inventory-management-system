@@ -22,8 +22,8 @@ inventory-management/
 ├── requirements.txt
 ├── README.md
 └── tests/
-    ├── test_app.py          # API route tests
-    ├── test_external_api.py # External API tests (mocked)
+    ├── test_main.py          # API route tests
+    ├── test_api.py # External API tests (mocked)
     └── test_cli.py          # CLI tests (mocked)
 ```
 
@@ -192,10 +192,10 @@ pytest -v
 
 This project follows a feature-branch workflow:
 - `main` — stable, always-working code
-- `feature/crud` — Flask CRUD implementation
-- `feature/external-api` — OpenFoodFacts integration
-- `feature/cli` — CLI client
-- `feature/tests` — test suite
+- `external-apis` — OpenFoodFacts integration
+- `cli` — CLI client
+- `tests` — test suite
+- `docs` _ README and requirements
 
 Each feature was developed on its own branch and merged into `main` via
 pull request once tests passed.
