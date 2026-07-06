@@ -11,7 +11,7 @@ class ExternalAPIError(Exception):
     pass
 
 
-def get_product_by_barcode(barcode: str) -> dict:
+def get_product_by_barcode(barcode: str) -> dict: 
     
     # v3 is the current, recommended API version for product reads.
     url = f"{BASE_URL}/api/v3/product/{barcode}.json"
