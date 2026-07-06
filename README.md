@@ -38,7 +38,7 @@ inventory-management/
 2. **Create a virtual environment (recommended)**
    ```bash
    python -m venv myenv
-   source venv/bin/activate   # Windows: venv\Scripts\activate
+   source myenv/bin/activate # Windows: venv\Scripts\activate
    ```
 
 3. **Install dependencies**
@@ -48,7 +48,7 @@ inventory-management/
 
 4. **Run the Flask API**
    ```bash
-   flask --app app run --debug
+   flask --app main run --debug
    ```
    The API will be available at `http://localhost:5000`.
 
