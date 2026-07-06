@@ -2,18 +2,21 @@ import requests
 
 BASE_URL = "https://world.openfoodfacts.org"
 REQUEST_TIMEOUT = 8  # seconds
-# See: https://openfoodfacts.github.io/openfoodfacts-server/api/
+
+
 HEADERS = {
     "User-Agent": "InventoryManagementLab/1.0 (student@example.com)"
 }
 
+
 class ExternalAPIError(Exception):
+    """Raised when the OpenFoodFacts API cannot be reached or returns bad data."""
     pass
 
 
-def get_product_by_barcode(barcode: str) -> dict: 
+def get_product_by_barcode(barcode: str) -> dict:
     
-    # v3 is the current, recommended API version for product reads.
+    
     url = f"{BASE_URL}/api/v3/product/{barcode}.json"
 
     try:
