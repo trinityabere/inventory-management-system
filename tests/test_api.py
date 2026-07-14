@@ -16,7 +16,7 @@ def _mock_response(json_data, status_code=200, raise_for_status_error=None):
     return mock_resp
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_barcode_success(mock_get):
     mock_get.return_value = _mock_response({
         "status": 1,
@@ -38,7 +38,7 @@ def test_get_product_by_barcode_success(mock_get):
     mock_get.assert_called_once()
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_barcode_not_found(mock_get):
     mock_get.return_value = _mock_response({"status": 0})
 
@@ -46,7 +46,7 @@ def test_get_product_by_barcode_not_found(mock_get):
         get_product_by_barcode("0000000")
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_barcode_network_failure(mock_get):
     mock_get.side_effect = requests.ConnectionError("network down")
 
@@ -54,7 +54,7 @@ def test_get_product_by_barcode_network_failure(mock_get):
         get_product_by_barcode("0018627")
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_name_success(mock_get):
     mock_get.return_value = _mock_response({
         "products": [
@@ -75,7 +75,7 @@ def test_get_product_by_name_success(mock_get):
     assert result["brands"] == "Jif"
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_name_no_results(mock_get):
     mock_get.return_value = _mock_response({"products": []})
 
@@ -83,7 +83,7 @@ def test_get_product_by_name_no_results(mock_get):
         get_product_by_name("nonexistent product xyz")
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_get_product_by_name_http_error(mock_get):
     mock_get.return_value = _mock_response(
         {}, status_code=500, raise_for_status_error=requests.HTTPError("server error")
@@ -93,7 +93,7 @@ def test_get_product_by_name_http_error(mock_get):
         get_product_by_name("anything")
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_barcode_lookup_sends_required_user_agent(mock_get):
     """OpenFoodFacts asks all integrations to send a custom User-Agent."""
     mock_get.return_value = _mock_response({
@@ -108,7 +108,7 @@ def test_barcode_lookup_sends_required_user_agent(mock_get):
     assert kwargs["headers"]["User-Agent"] != ""
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_name_search_sends_required_user_agent(mock_get):
     mock_get.return_value = _mock_response({
         "products": [{"code": "9", "product_name": "Y"}]
@@ -121,7 +121,7 @@ def test_name_search_sends_required_user_agent(mock_get):
     assert "User-Agent" in kwargs["headers"]
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_barcode_lookup_uses_v3_endpoint(mock_get):
     """v3 is the current recommended API version for product reads."""
     mock_get.return_value = _mock_response({
@@ -134,7 +134,7 @@ def test_barcode_lookup_uses_v3_endpoint(mock_get):
     assert "/api/v3/product/123.json" in args[0]
 
 
-@patch("external_api.requests.get")
+@patch("api.requests.get")
 def test_normalize_product_handles_missing_fields(mock_get):
     """Products with sparse data shouldn't crash the normalizer."""
     mock_get.return_value = _mock_response({

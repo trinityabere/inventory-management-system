@@ -2,6 +2,18 @@ import requests
 
 BASE_URL = "http://localhost:5000"
 
+MENU = """
+=== Inventory Management CLI ===
+1. View all items
+2. View a single item
+3. Add a new item manually
+4. Update an item's price or quantity
+5. Delete an item
+6. Find a product on OpenFoodFacts (no save)
+7. Import a product from OpenFoodFacts into inventory
+0. Exit
+"""
+
 
 class APIConnectionError(Exception):
     """Raised when the CLI cannot reach the Flask API."""

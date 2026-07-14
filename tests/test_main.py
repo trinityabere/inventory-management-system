@@ -140,7 +140,7 @@ def test_delete_item_not_found(client):
 
 
 
-@patch("app.get_product_by_barcode")
+@patch("main.get_product_by_barcode")
 def test_lookup_product_by_barcode(mock_get, client):
     mock_get.return_value = {
         "barcode": "12345",
@@ -156,7 +156,7 @@ def test_lookup_product_by_barcode(mock_get, client):
     mock_get.assert_called_once_with("12345")
 
 
-@patch("app.get_product_by_name")
+@patch("main.get_product_by_name")
 def test_lookup_product_by_name(mock_get, client):
     mock_get.return_value = {"barcode": "", "product_name": "Test Soda", "brands": "", "ingredients_text": "", "categories": "", "image_url": None}
     response = client.get("/products/lookup?name=Test+Soda")
@@ -169,7 +169,7 @@ def test_lookup_product_missing_params(client):
     assert response.status_code == 400
 
 
-@patch("app.get_product_by_barcode")
+@patch("main.get_product_by_barcode")
 def test_lookup_product_external_api_failure(mock_get, client):
     mock_get.side_effect = ExternalAPIError("No product found for barcode '000'")
     response = client.get("/products/lookup?barcode=000")
@@ -178,7 +178,7 @@ def test_lookup_product_external_api_failure(mock_get, client):
 
 
 
-@patch("app.get_product_by_barcode")
+@patch("main.get_product_by_barcode")
 def test_import_item_success(mock_get, client):
     mock_get.return_value = {
         "barcode": "12345",
@@ -207,7 +207,7 @@ def test_import_item_missing_identifier(client):
     assert response.status_code == 400
 
 
-@patch("app.get_product_by_name")
+@patch("main.get_product_by_name")
 def test_import_item_external_api_failure(mock_get, client):
     mock_get.side_effect = ExternalAPIError("No product found for name 'nonexistent'")
     response = client.post("/inventory/import", json={"name": "nonexistent"})
